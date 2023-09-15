@@ -1,0 +1,1 @@
+if "batman">"superman" then "yay" else "boo";;
