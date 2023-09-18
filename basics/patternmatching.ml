@@ -70,3 +70,12 @@ let rec apd lst1 lst2=match lst1 with
 |[] -> lst2
 |h::t -> h::(apd t lst2);;
 (* val apd : 'a list -> 'a list -> 'a list = <fun> *)
+let apd_tail_rec lst1 lst2 =
+  let rec aux acc lst1 =
+    match lst1 with
+    | [] -> acc @ lst2  (* Combine the accumulator with lst2 to form the final result *)
+    | h::t -> aux (acc @ [h]) t
+  in
+  aux [] lst1
+;;
+(* val apd : 'a list -> 'a list -> 'a list = <fun> *)
