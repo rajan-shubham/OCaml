@@ -48,3 +48,33 @@ let c1 = Circle {centre = (0.,0.);radius=1.};;
 val c1 : shape = Circle {centre = (0., 0.); radius = 1.} *)
 let r1 = Rectangle { lower_left=(-1.,-1.);upper_right=(1.,1.)};;
 (* val r1 : shape = Rectangle {lower_left = (-1., -1.); upper_right = (1., 1.)} *)
+let centre s = match s with
+|Circle { centre;radius} -> centre
+|Rectangle { lower_left;upper_right} -> (0.,0.) ;;
+(* val center : shape -> point = <fun> *)
+(* centre c1;;
+- : point = (0., 0.) *)
+
+let avg a b= (a+.b)/.2.;;
+(* val avg : float -> float -> float = <fun> *)
+let center s = match s with
+|Circle { centre;radius} -> centre
+|Rectangle { lower_left;upper_right} -> 
+let (x_ll,y_ll) = lower_left in
+let (x_ur,y_ur) = upper_right in
+(avg x_ll x_ur,avg y_ll y_ur);;
+(* val center : shape -> point = <fun> *)
+(* center r1;;
+- : point = (0., 0.) *)
+let r2 = Rectangle {lower_left = (-4.,-4.);upper_right = (2.,2.)};;
+(* val r2 : shape =
+  Rectangle {lower_left = (-4., -4.); upper_right = (2., 2.)} *)
+  (* center r2;;
+  - : point = (-1., -1.)   *)
+let center' s = match s with
+|Circle {centre ;radius}->centre
+|Rectangle {lower_left = (x_ll,y_ll);upper_right=(x_ur,y_ur) } -> (avg x_ll x_ur, avg y_ll y_ur);;
+(* val center' : shape -> point = <fun> 
+in this fun center' there is nesting of pattern matching done
+center' r2;;
+- : point = (-1., -1.)*)
