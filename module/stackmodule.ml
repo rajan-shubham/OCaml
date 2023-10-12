@@ -46,3 +46,11 @@ val pop : int list = [2; 1]
 (*ListStack.empty;;
 - : 'a list = []
 *)
+(* let ls1 = ListStack.(push 2 (push 1 empty));;
+val ls1 : int list = [2; 1]
+let ls2 = ListStack.(empty |> push 1 |> push 2);;
+val ls2 : int list = [2; 1] *)
+(* ls1 = ls2;;
+- : bool = true
+ls1 == ls2;;
+- : bool = false *)
