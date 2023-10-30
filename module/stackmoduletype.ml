@@ -17,7 +17,7 @@ module type StackSig = sig
   val pop : 'a stack -> 'a stack
 end
 
-module ListStack : StackSig = struct
+module (* Private Class *)ListStackImpl = struct
   type 'a stack = 'a list
 
   let empty = []
@@ -34,4 +34,9 @@ module ListStack : StackSig = struct
   |_ :: s -> s
 end
 
+module (* Public Class *)ListStack : StackSig = ListStackImpl
+
 let s1 : int ListStack.stack = ListStack.(empty |> push 42)
+let s2 : int ListStackImpl.stack = [42]
+let s3 : int ListStackImpl.stack = 99 :: s2;;
+(* val s3 : int list = [99; 42] *)
