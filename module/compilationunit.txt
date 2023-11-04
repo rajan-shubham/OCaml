@@ -1,0 +1,55 @@
+#use "compilationunit.ml";;
+type 'a t = 'a list
+exception Empty
+val empty : 'a t = []
+val is_empty : 'a t -> bool = <fun>
+val push : 'a -> 'a t -> 'a t = <fun>
+val peek : 'a t -> 'a = <fun>
+val pop : 'a t -> 'a t = <fun>
+
+empty;;
+- : 'a t = []
+
+ocamlc compilationunit.ml
+File "compilationunit.ml", line 1:
+Error: Could not find the .cmi file for interface compilationunit.mli.
+
+ocamlbuild compilationunit.cmo compilationunit.cmi
+Finished, 4 targets (0 cached) in 00:00:00.
+
+shubham@shubham ~/D/O/module (main)> ls
+basicmodule.ml        liststack.ml            moduleType.ml
+_build                loadvsuse.ml            mutualrecmodule.ml
+compilationunit.ml    MapModuledictionary.ml  OkasakiModuleQueue.ml
+compilationunit.mli   matmultfunctor.ml       opacity.ml
+functionalqueue.ml    modtypesemantics.ml     stackmodule.ml
+generalmoduletype.ml  moduleimplement2.ml     stackmoduletype.ml
+left_right_fold.ml    moduletype.ml
+
+shubham@shubham ~/D/O/module (main)> ls _build/
+compilationunit.cmi  compilationunit.ml.depends   _digests
+compilationunit.cmo  compilationunit.mli          _log
+compilationunit.ml   compilationunit.mli.depends  ocamlc.where
+
+utop # #directory "_build";;
+utop # #load "compilationunit.cmo";;
+utop # Compilationunit.empty;;
+- : 'a Compilationunit.t = <abstr>
+empty;;
+Error: Unbound value empty
+
+<after making .ocamlinit file>
+
+utop # Compilationunit.empty;;
+- : 'a Compilationunit.t = <abstr>
+<because the Compilationunit module available to utop>
+
+<using any third party library like ounit2>
+utop # #require "ounit2";;
+utop # OUnit2.assert_equal;;
+- : ?ctxt:OUnit2.test_ctxt ->
+    ?cmp:('a -> 'a -> bool) ->
+    ?printer:('a -> string) ->
+    ?pp_diff:(Format.formatter -> 'a * 'a -> unit) ->
+    ?msg:string -> 'a -> 'a -> unit
+= <fun>
