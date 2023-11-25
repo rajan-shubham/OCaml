@@ -11,7 +11,7 @@ let x = ref 42;;
 (* val x : int ref = {contents = 42} *)
 let y = ref 42;;
 (* val y : int ref = {contents = 42} *)
-let z = x;;
+let z = x;;(* aliases *)
 (* val z : int ref = {contents = 42} *)
 x := 43;;
 (* - : unit = () *)
