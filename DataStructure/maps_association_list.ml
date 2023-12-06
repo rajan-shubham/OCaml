@@ -32,12 +32,12 @@ end
   
   
 module ListMap : Map = struct
-    (** AF: [[(k1, v1); (k2, v2); ...; (kn, vn)]] is the map {k1 : v1, k2 : v2,
+    (** AF(Abstraction Function): [[(k1, v1); (k2, v2); ...; (kn, vn)]] is the map {k1 : v1, k2 : v2,
         ..., kn : vn}. If a key appears more than once in the list, then in the
         map it is bound to the left-most occurrence in the list. For example,
         [[(k, v1); (k, v2)]] represents {k : v1}. The empty list represents
         the empty map.
-        RI: none. *)
+        RI(Representation Invariants): none. *)
     type ('k, 'v) t = ('k * 'v) list
   
     (** Efficiency: O(1). *)
