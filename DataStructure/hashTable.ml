@@ -35,7 +35,15 @@ end
 
 module HashMap : TableMap = struct
 
-  (** AF and RI: above *)
+(* * AF：
+If [buckets] is
+[| [(k11, v11); (k12, v12); ...];
+[(k21, v21); (k22, v22); ...];
+... |]
+that represents the map {k11: v11, k12:v12, ..., k21: v21, k22: v22, ...,
+….｝
+RI: No key appears more than once in array (so, no duplicate keys in association lists). All keys are in the right buckets: if [k] is in Ibuckets] at index
+[b] then [hash(k) = b]. *)
   type ('k, 'v) t = {
     hash : 'k -> int;
     mutable size : int;
