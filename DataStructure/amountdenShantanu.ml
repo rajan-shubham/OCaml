@@ -20,3 +20,17 @@ let cch (amount:int) (denominations: int list): int list list =
 let rec stack2list s = match Stack.pop_opt s with
  | None -> []
  | Some v -> v::stack2list s;;
+
+
+(* A stack based implementation of cch *)
+let cchstack (amount:int) (denominations:int list): int list list =
+ let res = Stack.create () in
+ let rec cch a d acc =
+ if a<0 then failwith "Invalid Input"
+ else if a=0 then (Stack.push acc res)
+ else match d with
+ | [] -> ()
+ | h::t -> (if a>=h
+ then ((cch (a-h) d (h::acc));(cch a t acc))
+ else (cch a t acc)) in
+ cch amount denominations []; stack2list res;;
