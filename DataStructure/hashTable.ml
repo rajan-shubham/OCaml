@@ -49,6 +49,7 @@ RI: No key appears more than once in array (so, no duplicate keys in association
     mutable size : int;
     mutable buckets : ('k * 'v) list array
   }
+  (* so the size of the hash table is going to be the number of bindings in it & we had make it mutable so that we can change it as bindings are inserted and removed*)
 
   (** [capacity tab] is the number of buckets in [tab].
       Efficiency: O(1) *)
@@ -63,6 +64,7 @@ RI: No key appears more than once in array (so, no duplicate keys in association
   (** Efficiency: O(n) *)
   let create hash n =
     {hash; size = 0; buckets = Array.make n []}
+  (* size = 0 because there are no bindings so far & create a bunch of empty buckets in an array of the right length*)
 
   (** [index k tab] is the index at which key [k] should be stored in the
       buckets of [tab].
@@ -77,7 +79,7 @@ RI: No key appears more than once in array (so, no duplicate keys in association
   let insert_no_resize k v tab =
     let b = index k tab in (* O(1) *)
     let old_bucket = tab.buckets.(b) in
-    tab.buckets.(b) <- (k,v) :: List.remove_assoc k old_bucket; (* O(L) *)
+    tab.buckets.(b) <- (k,v) :: List.remove_assoc k old_bucket; (* expected O(bucket length L) *)
     if not (List.mem_assoc k old_bucket) then
       tab.size <- tab.size + 1;
     ()
