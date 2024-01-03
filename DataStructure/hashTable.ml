@@ -88,7 +88,7 @@ RI: No key appears more than once in array (so, no duplicate keys in association
       array of size [new_capacity], and re-inserts all the bindings of [tab]
       into the new array.  The keys are re-hashed, so the bindings will
       likely land in different buckets.
-      Efficiency: O(n), where n is the number of bindings. *)
+      Efficiency: expected O(n), where n is the number of bindings. *)
   let rehash tab new_capacity =
     (* insert [(k, v)] into [tab] *)
     let rehash_binding (k, v) =
@@ -99,7 +99,7 @@ RI: No key appears more than once in array (so, no duplicate keys in association
       List.iter rehash_binding bucket
     in
     let old_buckets = tab.buckets in
-    tab.buckets <- Array.make new_capacity []; (* O(n) *)
+    tab.buckets <- Array.make new_capacity []; (* O(n) * O(L)*)
     tab.size <- 0;
     (* [rehash_binding] is called by [rehash_bucket] once for every binding *)
     Array.iter rehash_bucket old_buckets (* expected O(n) *)
@@ -156,3 +156,53 @@ RI: No key appears more than once in array (so, no duplicate keys in association
     List.iter (fun (k, v) -> insert k v m) lst; (* n * O(n) is O(n^2) *)
     m
 end
+
+
+
+(* a hash function to convert character to its ascii value*)
+let char_hash c =
+  Char.code c;;
+(* val char_hash : char -> int = <fun> *)
+(*char_hash 'a';;
+- : int = 97*)
+
+
+(*let hm1 = HashMap.create char_hash 5;;
+val hm1 : (char, '_weak1) HashMap.t = <abstr>*)
+(*HashMap.insert 'a' "shubham" hm1;;
+- : unit = ()*)
+(*let htbind = HashMap.bindings hm1;;
+val htbind : (char * string) list = [('a', "shubham")]*)
+(*HashMap.insert 'b' "piyush" hm1;;
+- : unit = ()*)
+(*let htbind2 = HashMap.bindings hm1;;
+val htbind2 : (char * string) list = [('a', "shubham"); ('b', "piyush")]*)
+
+
+(*Hashtbl.hash function provided by OCaml. This function generates a hash code for a value of any type*)
+(*Hashtbl.hash;;
+- : 'a -> int = <fun>*)
+(*Hashtbl.hash "hello";;
+- : int = 840920576*)
+
+
+(*let lst1 = [(0,"shubham");(1,"prince");(2,"anurag");(3,"ajat");(4,"toufik")];;
+val lst1 : (int * string) list =
+  [(0, "shubham"); (1, "prince"); (2, "anurag"); (3, "ajat");
+   (4, "toufik")]
+*)
+(*let hm2 = HashMap.of_list Hashtbl.hash lst1;;
+val hm2 : (int, string) HashMap.t = <abstr>
+*)
+(*HashMap.insert 5 "aman" hm2;;
+- : unit = ()
+*)
+(*let htbind3 = HashMap.bindings hm2;;
+val htbind3 : (int * string) list =
+  [(4, "toufik"); (1, "prince"); (5, "aman"); (0, "shubham");
+   (3, "ajat"); (2, "anurag")]
+*)
+
+
+(*let findtoufik = HashMap.find 4 hm2;;
+val findtoufik : string option = Some "toufik"*)
