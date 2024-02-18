@@ -1,3 +1,10 @@
+(** An ['a sequence] is an infinite list of values of type ['a].
+    AF: [Cons (x, f)] is the sequence whose head is [x] and tail is [f ()].
+    RI: none. *)
+    type 'a sequence = Cons of 'a * (unit -> 'a sequence)
+
+let tl (Cons (_, t)) = t ()
+
 (** [square <a; b; c; ...>] is [<a * a; b * b; c * c; ...]. *)
 let rec square (Cons (h, t)) =
   Cons (h * h, fun () -> square (t ()))

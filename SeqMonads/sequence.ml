@@ -42,12 +42,12 @@ let tl (Cons (_, t)) = t ()
 
 (** [take n s] is the list of the first [n] elements of [s] *)
 let rec take n s =
-  if n = 0 then [] else hd s :: take (n - 1) (tl s)
+  if n = 0 then [] else hd s :: take (n - 1) (tl s);;
 (*val take : int -> 'a sequence -> 'a list = <fun>*)
 
 (** [drop n s] is all but the first [n] elements of [s] *)
 let rec drop n s =
-  if n = 0 then s else drop (n - 1) (tl s)
+  if n = 0 then s else drop (n - 1) (tl s);;
 (*val drop : int -> 'a sequence -> 'a sequence = <fun>*)
 
 take 10 nats;;
