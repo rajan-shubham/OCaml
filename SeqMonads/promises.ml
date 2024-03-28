@@ -26,3 +26,9 @@ Parallelism: use hardware that is capable of performing two or more computations
 (* In the functional programming paradigm, one of the best known abstractions for concurrency is promises. Other names for this idea include futures, deferreds, and delayeds. All those names refer to the idea of a computation that is not yet finished: it has promised to eventually produce a value in the future, but the completion of the computation has been deferred or delayed. There may be many such values being computed concurrently, and when the value is finally available, there may be computations ready to execute that depend on the value. *)
 
 (* This idea has been widely adopted in many languages and libraries, including Java, JavaScript, and .NET. Indeed, modern JavaScript adds an async keyword that causes a function to return a promise, and an await keyword that waits for a promise to finish computing. There are two widely-used libraries in OCaml that implement promises: Async and Lwt. Async is developed by Jane Street. Lwt is part of the Ocsigen project, which is a web framework for OCaml. *)
+
+(* For now, we will mostly forget about concurrency. Later we’ll come back and incorporate it. But there is one part of the design for concurrency that we need to address now. When we later start using functions for OS-provided concurrency, such as concurrent reads and writes from files, there will need to be a division of responsibilities *)
+
+(* The client code that wants to make use of concurrency will need to access promises: query whether they are resolved or pending, and make use of the resolved values.
+
+The library and OS code that implements concurrency will need to mutate the promise—that is, to actually resolve or reject it. Client code does not need that ability. *)
