@@ -32,3 +32,13 @@ Parallelism: use hardware that is capable of performing two or more computations
 (* The client code that wants to make use of concurrency will need to access promises: query whether they are resolved or pending, and make use of the resolved values.
 
 The library and OS code that implements concurrency will need to mutate the promise—that is, to actually resolve or reject it. Client code does not need that ability. *)
+
+(* We therefore will introduce one additional abstraction called a resolver. There will be a one-to-one association between promises and resolvers. The resolver for a promise will be used internally by the concurrency library but not revealed to clients. The clients will only get access to the promise. *)
+
+(* For example, suppose the concurrency library supported an operation to concurrently read a string from the network. The library would implement that operation as follows: *)
+
+(* Create a new promise and its associated resolver. The promise is pending.
+
+Call an OS function that will concurrently read the string then invoke the resolver on that string.
+
+Return the promise (but not resolver) to the client. The OS meanwhile continues to work on reading the string. *)
